@@ -3,7 +3,7 @@
 import { randomBytes } from "node:crypto";
 
 export default function handler(req, res) {
-  const clientId = process.env.GITHUB_CLIENT_ID;
+  const clientId = (process.env.GITHUB_CLIENT_ID || "").trim();
   if (!clientId) return res.status(500).send("Admin login is not set up yet: add GITHUB_CLIENT_ID in Vercel.");
 
   const host = req.headers["x-forwarded-host"] || req.headers.host;
