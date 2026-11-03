@@ -1,0 +1,325 @@
+{
+  "company": "Taryx Labs",
+  "companyShort": "Taryx",
+  "tagline": "Brilliance that lasts.",
+  "companyStory": "Taryx comes from “Tara” — star in Bengali and Sanskrit — and “onyx”, a precious stone. A star that shines like a jewel: intelligent websites built to shine and made to last.",
+  "name": "Md Farhan Almas",
+  "shortName": "Farhan",
+  "role": "Founder & Lead Developer",
+  "title": "AI Web Developer & Multimedia Creator",
+  "location": "Lithuania",
+  "timeZone": "Europe/Vilnius",
+  "photo": "assets/farhan.png",
+  "avatar": "assets/farhan-avatar.png",
+  "headline": [
+    "We build the",
+    "*intelligent* web."
+  ],
+  "available": "Now booking new projects",
+  "heroLine": "Taryx Labs designs premium websites with built-in AI that works for your business around the clock.",
+  "email": "farhanalmas694@gmail.com",
+  "links": {
+    "github": "https://github.com/farhan-almas07",
+    "linkedin": "https://www.linkedin.com/in/farhan-almas-020888392/",
+    "fiverr": ""
+  },
+  "contactFormKey": "",
+  "tools": [
+    "JavaScript",
+    "TypeScript",
+    "Python",
+    "HTML5",
+    "CSS3",
+    "SQL",
+    "React",
+    "Next.js",
+    "Node.js",
+    "Tailwind CSS",
+    "Supabase",
+    "Firebase",
+    "Gemini API",
+    "OpenAI API",
+    "Claude AI",
+    "Git & GitHub",
+    "Vercel",
+    "Figma"
+  ],
+  "statement": "We build websites that don't just look good — they think, talk, and help your business grow.",
+  "highlight": [
+    "think,",
+    "talk,",
+    "grow."
+  ],
+  "offerings": [
+    {
+      "title": "AI-Powered Websites",
+      "text": "Modern, fast, mobile-first websites with smart AI features built right in.",
+      "icon": "web"
+    },
+    {
+      "title": "AI Chatbots & Agents",
+      "text": "Assistants trained on your business that answer customers and capture leads around the clock.",
+      "icon": "chat"
+    },
+    {
+      "title": "Branding & Multimedia",
+      "text": "Identity, visuals and motion that make your brand feel premium.",
+      "icon": "design"
+    }
+  ],
+  "story": [
+    "I'm Farhan — founder of Taryx Labs. I'm from Bangladesh, now based in Lithuania, where I'm completing my bachelor's in Programming and Multimedia.",
+    "I started Taryx Labs to build websites that combine premium design with practical AI — like the assistant on this page that can answer your questions right now.",
+    "Our goal is simple: help businesses look exceptional online and save time with smart technology."
+  ],
+  "facts": [
+    {
+      "label": "Founded by",
+      "value": "Md Farhan Almas"
+    },
+    {
+      "label": "Based in",
+      "value": "Lithuania"
+    },
+    {
+      "label": "Background",
+      "value": "BSc Programming & Multimedia"
+    },
+    {
+      "label": "Specialty",
+      "value": "AI + Web"
+    }
+  ],
+  "skills": [
+    {
+      "group": "Languages",
+      "note": "The code behind every build",
+      "items": [
+        "JavaScript",
+        "TypeScript",
+        "Python",
+        "HTML5",
+        "CSS3",
+        "SQL"
+      ]
+    },
+    {
+      "group": "Frameworks & Tools",
+      "note": "Fast, modern, scalable",
+      "items": [
+        "React",
+        "Next.js",
+        "Node.js",
+        "Tailwind CSS",
+        "Supabase",
+        "Firebase",
+        "Git & GitHub",
+        "Vercel"
+      ]
+    },
+    {
+      "group": "AI Integration",
+      "note": "Bringing AI into real products",
+      "items": [
+        "Gemini API",
+        "OpenAI API",
+        "Claude AI",
+        "AI Chatbots",
+        "Prompt Engineering",
+        "AI-assisted Development"
+      ]
+    },
+    {
+      "group": "Design & Multimedia",
+      "note": "Visuals that feel premium",
+      "items": [
+        "UI/UX Design",
+        "Figma",
+        "Motion & Animation",
+        "Image & Video",
+        "Branding"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "slug": "aurelia-estates",
+      "title": "Aurelia Estates",
+      "category": "AI Real Estate Platform",
+      "status": "Live demo",
+      "year": "2026",
+      "description": "A real estate website where visitors filter homes, book viewings, and chat with an AI assistant that recommends properties from the live listings.",
+      "tags": [
+        "JavaScript",
+        "Gemini API",
+        "Serverless",
+        "UI Design"
+      ],
+      "demo": "projects/real-estate/",
+      "code": "",
+      "image": "assets/projects/real-estate.jpg",
+      "accent": "#7fc8a0",
+      "case": {
+        "role": "Design, development & AI integration",
+        "timeline": "2 weeks",
+        "challenge": "Real estate agencies lose leads after hours — visitors have questions about price, size and availability, but nobody is there to answer, and browsing long listing pages is slow.",
+        "solution": "A clean property website with instant filters and an AI assistant that knows every listing. It answers questions in plain language, recommends matching homes and guides visitors to book a viewing.",
+        "features": [
+          "AI assistant trained on live listings",
+          "Instant filters: buy/rent, type, bedrooms, budget",
+          "Viewing booking with date & time picker",
+          "Fully responsive, fast-loading design",
+          "Works offline with smart built-in answers"
+        ],
+        "results": [
+          "Questions answered 24/7 without staff",
+          "Visitors find a matching home in seconds",
+          "Every conversation can end in a booking"
+        ]
+      }
+    },
+    {
+      "slug": "captioncraft",
+      "title": "CaptionCraft",
+      "category": "AI Content Tool",
+      "status": "Live demo",
+      "year": "2026",
+      "description": "Describe a post and get three scroll-stopping captions plus hashtags, with a live Instagram-style preview and one-click copy.",
+      "tags": [
+        "JavaScript",
+        "Gemini API",
+        "JSON output",
+        "UX"
+      ],
+      "demo": "projects/caption-generator/",
+      "code": "",
+      "image": "assets/projects/caption-generator.jpg",
+      "accent": "#a18bff",
+      "case": {
+        "role": "Product design, development & prompt engineering",
+        "timeline": "1 week",
+        "challenge": "Small business owners know they should post every day, but writing good captions takes time and creativity they don't have.",
+        "solution": "A focused tool: describe the business and the post, pick a tone and platform, and AI writes three ready-to-use captions with hashtags — previewed exactly as they'll look on a phone.",
+        "features": [
+          "3 caption options per request",
+          "Tone & platform controls",
+          "Hashtag set with one-click copy",
+          "Live phone preview of the post",
+          "Structured AI output for reliable results"
+        ],
+        "results": [
+          "A week of captions in minutes",
+          "Consistent brand voice across posts",
+          "No writing skills needed"
+        ]
+      }
+    },
+    {
+      "slug": "brandkit-ai",
+      "title": "BrandKit AI",
+      "category": "AI Brand Identity Generator",
+      "status": "Live demo",
+      "year": "2026",
+      "description": "Type a business idea and AI designs a color palette, font pairing, tagline and brand voice — then previews it on a live website mockup.",
+      "tags": [
+        "JavaScript",
+        "Gemini API",
+        "Design Systems",
+        "Typography"
+      ],
+      "demo": "projects/brand-kit/",
+      "code": "",
+      "image": "assets/projects/brand-kit.jpg",
+      "accent": "#ffb38a",
+      "case": {
+        "role": "Design systems, development & AI integration",
+        "timeline": "1 week",
+        "challenge": "New businesses need a brand before they can build anything — but hiring a designer is expensive and slow, and DIY results look generic.",
+        "solution": "Describe the business and its vibe, and AI creates a complete starter identity: a balanced 5-color palette, a font pairing, a tagline and a brand voice — shown live on a website preview.",
+        "features": [
+          "5-color palette with roles and contrast",
+          "Curated font pairing, loaded live",
+          "Tagline, brand voice and logo idea",
+          "Instant website mockup in the new brand",
+          "Click any color to copy its code"
+        ],
+        "results": [
+          "A brand direction in under a minute",
+          "Professional color & type choices",
+          "Ready to hand to a developer"
+        ]
+      }
+    }
+  ],
+  "process": [
+    {
+      "title": "Discover",
+      "text": "We talk about your goals, your audience and what the site needs to do."
+    },
+    {
+      "title": "Design",
+      "text": "We plan the layout and look, so it feels premium and on-brand."
+    },
+    {
+      "title": "Build",
+      "text": "We build the site and AI features, with updates as we go."
+    },
+    {
+      "title": "Launch",
+      "text": "Your site goes live, fast and mobile-ready, with support after launch."
+    }
+  ],
+  "journey": [
+    {
+      "tag": "Roots",
+      "title": "Bangladesh",
+      "text": "Where my curiosity for computers and the web began."
+    },
+    {
+      "tag": "Today",
+      "title": "Lithuania",
+      "text": "Studying Programming & Multimedia and building real projects."
+    },
+    {
+      "tag": "Founded",
+      "title": "Taryx Labs",
+      "text": "A studio for AI-powered websites, chatbots and brands."
+    },
+    {
+      "tag": "Next",
+      "title": "Your project",
+      "text": "Helping businesses grow with smart, beautiful websites."
+    }
+  ],
+  "showServices": false,
+  "services": [
+    {
+      "name": "AI Chatbot Setup",
+      "price": "$25",
+      "description": "An AI chatbot trained on your FAQs, added to your website.",
+      "link": ""
+    },
+    {
+      "name": "AI Website",
+      "price": "$75",
+      "description": "A modern 1–5 page website with a built-in AI assistant.",
+      "link": ""
+    },
+    {
+      "name": "AI Website + Booking",
+      "price": "$180",
+      "description": "Full website, AI chatbot and appointment booking.",
+      "link": ""
+    }
+  ],
+  "chatbot": {
+    "greeting": "Hi! I'm the Taryx Labs assistant. Ask me about our work, our founder, or how we can help with your project.",
+    "suggestions": [
+      "What is Taryx Labs?",
+      "Who is the founder?",
+      "Can you build my website?",
+      "How do I contact you?"
+    ],
+    "extraInfo": ""
+  }
+}

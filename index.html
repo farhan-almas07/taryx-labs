@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taryx Labs — AI-Powered Websites & Brands</title>
+  <meta name="description" content="Taryx Labs designs premium websites with built-in AI, chatbots and brand identities. Founded by Md Farhan Almas." />
+  <meta property="og:title" content="Taryx Labs — AI-Powered Websites & Brands" />
+  <meta property="og:description" content="Premium websites with built-in AI that works around the clock. Founded by Md Farhan Almas." />
+  <meta property="og:image" content="assets/projects/taryx-site.jpg" />
+  <meta name="theme-color" content="#070910" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body class="loading">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e2b3"/><stop offset="1" stop-color="#c79a4f"/></linearGradient>
+      <symbol id="taryx-mark" viewBox="0 0 32 32">
+        <path d="M16 1.8 30.2 16 16 30.2 1.8 16Z" fill="none" stroke="url(#g)" stroke-width="1.8"/>
+        <path d="M16 7.5 18 14 24.5 16 18 18 16 24.5 14 18 7.5 16 14 14Z" fill="url(#g)"/>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a href="#top" class="logo" aria-label="Taryx Labs home">
+      <svg class="logo-mark"><use href="#taryx-mark"/></svg>
+      <span class="logo-word">Taryx<span>Labs</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#work">Services</a>
+      <a href="#projects">Work</a>
+      <a href="#about">Founder</a>
+      <a href="#stack">Stack</a>
+      <a href="#services" class="services-link" hidden>Pricing</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  <div class="cursor-light" aria-hidden="true"></div>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <canvas class="hero-3d"></canvas>
+        <div class="aurora a1"></div><div class="aurora a2"></div>
+        <div class="grid-lines"></div>
+      </div>
+
+      <span class="intro-hint" aria-hidden="true">Click to skip</span>
+      <div class="hero-grid">
+        <div class="hero-inner">
+          <p class="pill reveal"><span class="dot"></span><span data-available></span></p>
+          <h1 class="hero-title" data-headline></h1>
+          <p class="hero-line reveal" data-hero-line></p>
+          <div class="hero-actions reveal">
+            <a href="#contact" class="btn btn-primary magnetic" data-start>Start a project <span class="arr">→</span></a>
+            <a href="#projects" class="btn btn-ghost magnetic">See our work</a>
+          </div>
+          <a href="#about" class="founder-card reveal">
+            <span class="fc-avatar"><img alt="Md Farhan Almas" data-avatar /></span>
+            <span class="fc-text"><small>Founded by</small><strong data-name></strong><span data-role></span></span>
+            <span class="fc-go" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="info-strip reveal">
+        <div><span>Studio</span><strong data-company></strong></div>
+        <div><span>Based in</span><strong data-location></strong></div>
+        <div><span>Local time</span><strong data-clock></strong></div>
+        <div><span>Status</span><strong class="status"><i></i>Booking projects</strong></div>
+      </div>
+    </section>
+
+    <!-- GIANT NAME -->
+    <section class="bigname-wrap" aria-hidden="true">
+      <p class="bigname" data-bigname></p>
+    </section>
+
+    <!-- STATEMENT -->
+    <section class="statement" id="statement">
+      <div class="statement-sticky">
+        <p class="statement-text" data-statement></p>
+      </div>
+    </section>
+
+    <!-- WHAT WE DO -->
+    <section class="section" id="work">
+      <div class="container">
+        <p class="section-label reveal">What we do</p>
+        <h2 class="section-title reveal">Websites with a brain.<br /><span class="muted">Design with a soul.</span></h2>
+        <div class="offer-grid" data-offerings></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SLIDER -->
+    <section class="section projects-section" id="projects">
+      <div class="container projects-top">
+        <div>
+          <p class="section-label reveal">Selected work</p>
+          <h2 class="section-title reveal">Built by Taryx.<br /><span class="muted">Ready to explore.</span></h2>
+        </div>
+        <div class="slider-controls reveal">
+          <span class="slider-count"><b data-slide-now>01</b> / <span data-slide-total>04</span></span>
+          <button class="round-btn" data-prev aria-label="Previous project">←</button>
+          <button class="round-btn" data-next aria-label="Next project">→</button>
+        </div>
+      </div>
+      <div class="slider reveal" tabindex="0" aria-roledescription="carousel" aria-label="Projects">
+        <div class="slides" data-projects></div>
+      </div>
+      <div class="container">
+        <div class="slider-dots" data-dots></div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section" id="process">
+      <div class="container">
+        <p class="section-label reveal">Process</p>
+        <h2 class="section-title reveal">From idea to launch<br /><span class="muted">in four steps.</span></h2>
+        <div class="process" data-process></div>
+      </div>
+    </section>
+
+    <!-- FOUNDER -->
+    <section class="section" id="about">
+      <div class="container">
+        <p class="section-label reveal">Founder</p>
+        <h2 class="section-title reveal">Meet the founder<br /><span class="muted">behind Taryx.</span></h2>
+        <div class="about-grid">
+          <div class="about-photo reveal">
+            <div class="photo-glow" aria-hidden="true"></div>
+            <div class="photo-card tilt">
+              <div class="photo-bg" aria-hidden="true"></div>
+              <img alt="Portrait of Md Farhan Almas" data-photo loading="lazy" />
+            </div>
+            <span class="photo-tag"><svg class="tag-mark"><use href="#taryx-mark"/></svg> Founder, Taryx Labs</span>
+          </div>
+          <div class="about-right">
+            <div class="about-story" data-story></div>
+            <div class="facts" data-facts></div>
+          </div>
+        </div>
+        <div class="journey" data-journey></div>
+      </div>
+    </section>
+
+    <!-- LIVE TERMINAL + TECH GRID -->
+    <section class="section code-section" id="stack">
+      <div class="container">
+        <p class="section-label reveal">Live stack</p>
+        <h2 class="section-title reveal">Code, design and AI.<br /><span class="muted">All in one place.</span></h2>
+        <div class="code-grid">
+          <div class="terminal reveal">
+            <div class="term-bar"><i></i><i></i><i></i><span>founder@taryxlabs — zsh</span></div>
+            <pre class="term-body" data-terminal></pre>
+          </div>
+          <div class="tech-grid reveal" data-techgrid></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="container">
+        <p class="section-label reveal">Toolkit</p>
+        <h2 class="section-title reveal">The tools behind<br /><span class="muted">the magic.</span></h2>
+        <div class="skills-grid" data-skills></div>
+      </div>
+    </section>
+
+    <!-- SERVICES / PRICING (hidden until showServices = true) -->
+    <section class="section" id="services" hidden>
+      <div class="container">
+        <p class="section-label reveal">Pricing</p>
+        <h2 class="section-title reveal">Simple, clear pricing.</h2>
+        <div class="services" data-services></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <div class="contact-glow" aria-hidden="true"></div>
+      <div class="container contact-grid">
+        <div class="contact-left">
+          <p class="section-label reveal">Contact</p>
+          <h2 class="contact-title reveal">Have a project<br /><span class="shine">in mind?</span></h2>
+          <p class="contact-sub reveal">Tell us about it — we usually reply within 24 hours.</p>
+          <div class="email-box reveal">
+            <span class="email-label">Email</span>
+            <span class="email-addr" data-email></span>
+            <div class="email-actions">
+              <button type="button" class="mini-btn" data-copy-email>Copy</button>
+              <a class="mini-btn" data-gmail target="_blank" rel="noopener">Open Gmail</a>
+            </div>
+          </div>
+          <div class="socials reveal">
+            <a data-github target="_blank" rel="noopener">GitHub ↗</a>
+            <a data-linkedin target="_blank" rel="noopener">LinkedIn ↗</a>
+            <a data-fiverr target="_blank" rel="noopener" hidden>Fiverr ↗</a>
+          </div>
+        </div>
+
+        <form class="contact-form card reveal" id="contact-form" novalidate>
+          <div class="form-row">
+            <label>Your name<input name="name" required autocomplete="name" placeholder="John Smith" /></label>
+            <label>Your email<input name="email" type="email" required autocomplete="email" placeholder="john@company.com" /></label>
+          </div>
+          <fieldset class="choice">
+            <legend>What do you need?</legend>
+            <div class="choices" data-choices></div>
+          </fieldset>
+          <label>Budget<select name="budget">
+            <option value="Not sure yet">Not sure yet</option>
+            <option>Under $100</option><option>$100 – $300</option><option>$300 – $1,000</option><option>$1,000+</option>
+          </select></label>
+          <label>Project details<textarea name="message" rows="4" required placeholder="Tell us about your business and what you'd like to build…"></textarea></label>
+          <input type="checkbox" name="botcheck" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <button type="submit" class="btn btn-primary form-submit">Send message <span class="arr">→</span></button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="foot-brand"><svg class="logo-mark"><use href="#taryx-mark"/></svg><span>© <span data-year></span> Taryx Labs</span></div>
+    <p>Founded by <span data-name></span> · <span data-location></span></p>
+  </footer>
+
+  <!-- CHATBOT -->
+  <button class="chat-fab" data-open-chat aria-label="Open AI chat">
+    <span class="fab-dot"></span> Ask AI
+  </button>
+  <div class="chat" id="chat" role="dialog" aria-label="AI assistant" aria-hidden="true">
+    <div class="chat-head">
+      <span class="chat-avatar"><svg><use href="#taryx-mark"/></svg></span>
+      <div>
+        <strong>Taryx AI</strong>
+        <span class="chat-status">Online · powered by Gemini</span>
+      </div>
+      <button class="chat-close" aria-label="Close chat">×</button>
+    </div>
+    <div class="chat-body" id="chat-body"></div>
+    <div class="chat-suggest" id="chat-suggest"></div>
+    <form class="chat-form" id="chat-form">
+      <input id="chat-input" type="text" placeholder="Ask about Taryx Labs…" autocomplete="off" maxlength="500" />
+      <button type="submit" aria-label="Send">↑</button>
+    </form>
+  </div>
+
+  <script type="module" src="intro3d.js?v=14"></script>
+  <script type="module" src="main.js?v=14"></script>
+</body>
+</html>
