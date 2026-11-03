@@ -165,6 +165,16 @@ introDone.then(() => {
   setTimeout(() => document.body.classList.add("settled"), 2400);
 });
 
+/* ================= Phone menu ================= */
+const menuBtn = $(".menu-btn");
+const setMenu = (open) => {
+  document.body.classList.toggle("menu-open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+  $(".mobile-menu").setAttribute("aria-hidden", !open);
+};
+menuBtn.addEventListener("click", () => setMenu(!document.body.classList.contains("menu-open")));
+$$(".mobile-menu a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+
 /* ================= Reveal on scroll ================= */
 const io = new IntersectionObserver(
   (entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))),
@@ -182,7 +192,7 @@ let lastY = 0;
 function onScroll() {
   const y = scrollY, vh = innerHeight;
   nav.classList.toggle("scrolled", y > 20);
-  nav.classList.toggle("hide", y > lastY && y > vh * 0.8 && !document.body.classList.contains("chat-open"));
+  nav.classList.toggle("hide", y > lastY && y > vh * 0.8 && !document.body.classList.contains("chat-open") && !document.body.classList.contains("menu-open"));
   lastY = y;
   bar.style.transform = `scaleX(${y / (document.documentElement.scrollHeight - vh) || 0})`;
 

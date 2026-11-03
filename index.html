@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=17" />
 </head>
 <body class="loading">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -42,7 +42,16 @@
       <a href="#services" class="services-link" hidden>Pricing</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
   </header>
+  <div class="mobile-menu" aria-hidden="true">
+    <a href="#work">Services</a>
+    <a href="#projects">Work</a>
+    <a href="#about">Founder</a>
+    <a href="#stack">Stack</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="btn btn-primary" data-start>Start a project <span class="arr">→</span></a>
+  </div>
   <div class="cursor-light" aria-hidden="true"></div>
 
   <main id="top">
@@ -257,7 +266,7 @@
     </form>
   </div>
 
-  <script type="module" src="intro3d.js?v=15"></script>
-  <script type="module" src="main.js?v=15"></script>
+  <script type="module" src="intro3d.js?v=17"></script>
+  <script type="module" src="main.js?v=17"></script>
 </body>
 </html>
