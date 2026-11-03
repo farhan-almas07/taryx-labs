@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Taryx Labs — Admin</title>
-  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <!-- absolute path so /admin and /admin/ both work -->
+  <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
 </head>
 <body>
   <!-- Decap CMS: edits site-data.json and uploads images, then publishes to GitHub → Vercel updates the live site -->
