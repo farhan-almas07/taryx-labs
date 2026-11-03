@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BrandKit AI — Instant Brand Identity Demo</title>
+  <meta name="description" content="Describe a business and get a color palette, fonts and tagline from AI. Demo project by Taryx Labs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg: #fafaf9; --ink: #111; --muted: #6b6b6b; --line: #e7e5e2; --card: #fff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5;
+      background-image: radial-gradient(#e7e5e2 1px, transparent 1px); background-size: 22px 22px; }
+    button, input, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; background: none; }
+    .wrap { width: min(1180px, 100% - 32px); margin: auto; }
+    .demo-bar { background: var(--ink); color: #eee; font-size: 13px; text-align: center; padding: 9px 16px; }
+    .demo-bar a { color: #f1d9a4; text-decoration: underline; }
+    header { padding: 22px 0; display: flex; align-items: center; gap: 10px; font-family: "Space Grotesk"; font-weight: 700; font-size: 20px; }
+    header i { width: 30px; height: 30px; border-radius: 50%; background: conic-gradient(#ff6b4a, #ffc94a, #4ad6a0, #4a8dff, #b44aff, #ff6b4a); }
+    .intro { padding: 26px 0 36px; max-width: 760px; }
+    .intro h1 { font-family: "Space Grotesk"; font-size: clamp(38px, 5.6vw, 68px); line-height: 1.02; letter-spacing: -0.045em; }
+    .intro p { color: var(--muted); font-size: 18px; margin-top: 14px; }
+    .app { display: grid; grid-template-columns: 360px 1fr; gap: 24px; padding-bottom: 80px; align-items: start; }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; display: grid; gap: 16px; position: sticky; top: 16px; }
+    label, .lbl { display: grid; gap: 7px; font-size: 13px; font-weight: 600; color: var(--muted); }
+    input, textarea { border: 1px solid var(--line); border-radius: 12px; padding: 12px 13px; font-size: 15px; background: #fcfcfb; outline: none; color: var(--ink); }
+    textarea { min-height: 84px; resize: vertical; }
+    input:focus, textarea:focus { border-color: var(--ink); }
+    .vibes { display: flex; flex-wrap: wrap; gap: 7px; }
+    .vibes button { padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); font-size: 13.5px; font-weight: 500; transition: all .2s; }
+    .vibes button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .go { background: var(--ink); color: #fff; padding: 15px; border-radius: 14px; font-weight: 600; font-size: 16px; transition: transform .2s; }
+    .go:hover { transform: translateY(-2px); }
+    .go:disabled { opacity: .6; cursor: wait; }
+    .err { color: #c0392b; font-size: 13.5px; min-height: 1em; }
+    .board { display: grid; gap: 18px; }
+    .box { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; animation: up .55s cubic-bezier(.22,1,.36,1) both; }
+    .box h4 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    @keyframes up { from { opacity: 0; transform: translateY(14px); } }
+    .palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .sw { border-radius: 14px; overflow: hidden; border: 1px solid var(--line); text-align: left; transition: transform .25s; }
+    .sw:hover { transform: translateY(-3px); }
+    .sw .c { height: 110px; }
+    .sw .t { padding: 9px 11px; font-size: 12px; }
+    .sw .t b { display: block; font-size: 13px; }
+    .sw .t span { color: var(--muted); font-family: ui-monospace, monospace; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .type .big { font-size: 46px; line-height: 1; letter-spacing: -0.03em; }
+    .type .small { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .type .names { margin-top: 14px; font-size: 12.5px; color: var(--muted); }
+    .tagline { font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; }
+    .voice { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .voice span { padding: 5px 11px; border-radius: 999px; background: #f2f1ef; font-size: 13px; font-weight: 500; }
+    .logo-idea { margin-top: 14px; font-size: 14px; color: var(--muted); }
+    .logo-row { display: flex; gap: 14px; flex-wrap: wrap; }
+    .logo-row svg { width: 120px; height: 120px; border-radius: 18px; border: 1px solid var(--line); }
+    .dl-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .dl-row button { font-size: 13.5px; font-weight: 600; padding: 9px 15px; border-radius: 999px; border: 1px solid var(--line); background: #fff; }
+    .dl-row button:hover { border-color: var(--ink); }
+    .mock { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
+    .mock-nav { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; font-weight: 700; }
+    .mock-nav span { font-size: 12px; font-weight: 500; opacity: .7; display: flex; gap: 14px; }
+    .mock-hero { padding: 44px 22px 50px; text-align: center; }
+    .mock-hero h2 { font-size: clamp(26px, 3.4vw, 40px); line-height: 1.05; letter-spacing: -0.02em; }
+    .mock-hero p { margin: 12px auto 22px; max-width: 420px; opacity: .8; font-size: 15px; }
+    .mock-hero a { display: inline-block; padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: 14px; }
+    .placeholder { border: 2px dashed var(--line); border-radius: 20px; padding: 70px 30px; text-align: center; color: var(--muted); background: rgba(255,255,255,.6); }
+    .placeholder b { display: block; font-family: "Space Grotesk"; font-size: 22px; color: var(--ink); margin-bottom: 6px; }
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 30px); background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 999px; font-size: 14px; opacity: 0; transition: all .35s; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    footer { border-top: 1px solid var(--line); padding: 26px 0; font-size: 13px; color: var(--muted); text-align: center; background: var(--bg); }
+    footer a { color: var(--ink); font-weight: 600; }
+    @media (max-width: 960px) { .app { grid-template-columns: 1fr; } .panel { position: static; } .palette { grid-template-columns: repeat(3, 1fr); } .two { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">Demo project by Taryx Labs. <a href="../../#projects">← Back to portfolio</a></div>
+  <div class="wrap">
+    <header><i></i>BrandKit AI</header>
+    <section class="intro">
+      <h1>A complete brand identity in one click.</h1>
+      <p>Describe a business. AI designs its color palette, font pairing, tagline and voice — with a live website preview.</p>
+    </section>
+    <section class="app">
+      <form class="panel" id="form">
+        <label>Brand name<input name="name" required maxlength="40" value="Mossy" placeholder="e.g. Mossy" /></label>
+        <label>What does it do?<textarea name="about" required maxlength="240" placeholder="e.g. Eco-friendly indoor plant delivery">Eco-friendly indoor plant delivery for city apartments</textarea></label>
+        <div class="lbl">Vibe (pick up to 3)<div class="vibes" id="vibes">
+          <button type="button" class="on">Natural</button><button type="button" class="on">Modern</button><button type="button">Minimal</button><button type="button">Bold</button>
+          <button type="button">Playful</button><button type="button">Elegant</button><button type="button">Techy</button><button type="button">Warm</button>
+        </div></div>
+        <button class="go" id="go">Generate brand kit</button>
+        <p class="err" id="err" role="status"></p>
+      </form>
+      <div class="board" id="board"><div class="placeholder"><b>Your brand kit appears here</b>Palette, fonts, tagline and a live preview.</div></div>
+    </section>
+  </div>
+  <footer>BrandKit AI is a demo · Designed &amp; built by <a href="../../">Taryx Labs</a></footer>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const FONTS = ["Inter", "Poppins", "Playfair Display", "DM Serif Display", "Space Grotesk", "Montserrat", "Lora", "Sora", "Outfit", "Fraunces", "Manrope", "Bebas Neue"];
+
+    $("#vibes").addEventListener("click", (e) => {
+      if (e.target.tagName !== "BUTTON") return;
+      const on = $("#vibes").querySelectorAll(".on");
+      if (!e.target.classList.contains("on") && on.length >= 3) on[0].classList.remove("on");
+      e.target.classList.toggle("on");
+    });
+
+    function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("show"), 1400); }
+    function loadFont(f) {
+      if (!FONTS.includes(f) || document.querySelector(`link[data-font="${f}"]`)) return;
+      const l = document.createElement("link"); l.rel = "stylesheet"; l.dataset.font = f;
+      l.href = `https://fonts.googleapis.com/css2?family=${f.replace(/ /g, "+")}:wght@400;600;700&display=swap`;
+      document.head.append(l);
+    }
+    // readable text on any color
+    const lum = (hex) => { const n = parseInt(hex.slice(1), 16); const c = [n >> 16, (n >> 8) & 255, n & 255].map((v) => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+    const onColor = (hex) => (lum(hex) > .4 ? "#111111" : "#ffffff");
+
+    // Offline fallback: curated palettes per vibe
+    const PRESETS = {
+      Natural: [["Linen", "#F4F1EA"], ["Sage", "#DDE5D3"], ["Moss", "#4F6F52"], ["Clay", "#C97B4A"], ["Bark", "#2B2A26"]],
+      Modern: [["Paper", "#F7F7F5"], ["Mist", "#E3E7EE"], ["Cobalt", "#2F5BEA"], ["Coral", "#FF7A59"], ["Ink", "#15171C"]],
+      Minimal: [["White", "#FFFFFF"], ["Stone", "#EEEDEA"], ["Graphite", "#3A3A3A"], ["Signal", "#E5483B"], ["Black", "#0E0E0E"]],
+      Bold: [["Cream", "#FFF6E5"], ["Lemon", "#FFE15D"], ["Electric", "#5B2EFF"], ["Hot pink", "#FF3D8B"], ["Night", "#14112B"]],
+      Playful: [["Cloud", "#FFF9F2"], ["Bubble", "#FFD6E8"], ["Grape", "#7C4DFF"], ["Mango", "#FFB547"], ["Plum", "#2A1F3D"]],
+      Elegant: [["Ivory", "#FAF7F2"], ["Champagne", "#EADBC4"], ["Emerald", "#1F4D3F"], ["Gold", "#B88A44"], ["Onyx", "#1A1A1A"]],
+      Techy: [["Void", "#0B0F17"], ["Panel", "#141B2A"], ["Cyan", "#22D3EE"], ["Lime", "#A3E635"], ["Frost", "#E6EDF7"]],
+      Warm: [["Sand", "#FBF3E8"], ["Peach", "#FFDCC2"], ["Terracotta", "#D2643A"], ["Mustard", "#E2A93B"], ["Cocoa", "#3B2A22"]],
+    };
+    const FONTPAIR = { Natural: ["Fraunces", "Inter"], Modern: ["Space Grotesk", "Inter"], Minimal: ["Manrope", "Inter"], Bold: ["Bebas Neue", "Poppins"], Playful: ["Outfit", "Poppins"], Elegant: ["Playfair Display", "Lora"], Techy: ["Sora", "Manrope"], Warm: ["DM Serif Display", "Outfit"] };
+    const ROLES = ["Background", "Surface", "Primary", "Accent", "Text"];
+    function localKit({ name, about, vibes }) {
+      const v = vibes[0] || "Modern";
+      const [h, b] = FONTPAIR[v];
+      return {
+        palette: PRESETS[v].map(([n, hex], i) => ({ name: n, hex, role: ROLES[i] })),
+        headingFont: h, bodyFont: b,
+        tagline: `${name}: ${v === "Bold" ? "Make it loud." : v === "Elegant" ? "Quietly exceptional." : v === "Playful" ? "Joy, delivered." : v === "Techy" ? "Built for what's next." : "Simply better, every day."}`,
+        voice: [v, vibes[1] || "Clear", "Human"],
+        logoIdea: `A simple wordmark of "${name}" in ${h}, with a small symbol inspired by "${about.split(" ").slice(0, 3).join(" ")}".`,
+      };
+    }
+
+    // three simple logo concepts drawn from the palette
+    function logos(name, primary, accent, bg, text, H) {
+      const L = esc((name.trim()[0] || "B").toUpperCase());
+      const ff = H.replace(/"/g, "'");
+      return [
+        `<svg viewBox="0 0 120 120"><rect width="120" height="120" fill="${bg}"/><circle cx="60" cy="60" r="38" fill="${primary}"/><text x="60" y="61" text-anchor="middle" dominant-baseline="middle" font-family="${ff}" font-size="44" font-weight="700" fill="${onColor(primary)}">${L}</text></svg>`,
+        `<svg viewBox="0 0 120 120"><rect width="120" height="120" fill="${text}"/><rect x="26" y="26" width="68" height="68" rx="18" fill="none" stroke="${accent}" stroke-width="5"/><text x="60" y="62" text-anchor="middle" dominant-baseline="middle" font-family="${ff}" font-size="40" font-weight="700" fill="${accent}">${L}</text></svg>`,
+        `<svg viewBox="0 0 120 120"><rect width="120" height="120" fill="${primary}"/><text x="60" y="64" text-anchor="middle" dominant-baseline="middle" font-family="${ff}" font-size="22" font-weight="700" fill="${onColor(primary)}">${esc(name.slice(0, 10))}</text><rect x="38" y="80" width="44" height="4" rx="2" fill="${accent}"/></svg>`,
+      ].join("");
+    }
+
+    function show(k, name, about) {
+      [k.headingFont, k.bodyFont].forEach(loadFont);
+      const byRole = (r, i) => (k.palette.find((c) => c.role?.toLowerCase().includes(r)) || k.palette[i]).hex;
+      const bg = byRole("background", 0), surface = byRole("surface", 1), primary = byRole("primary", 2), accent = byRole("accent", 3), text = byRole("text", 4);
+      const H = `'${k.headingFont}', serif`, B = `'${k.bodyFont}', sans-serif`;
+      $("#board").innerHTML = `
+        <div class="box"><h4>Color palette · click to copy</h4><div class="palette">${k.palette.map((c) => `<button class="sw" data-hex="${c.hex}"><div class="c" style="background:${c.hex}"></div><div class="t"><b>${esc(c.name)}</b><span>${c.hex}</span> · ${esc(c.role || "")}</div></button>`).join("")}</div></div>
+        <div class="two">
+          <div class="box type"><h4>Typography</h4><div class="big" style="font-family:${H}">${esc(name)}</div><div class="small" style="font-family:${B}">The quick brown fox jumps over the lazy dog. 0123456789</div><div class="names">Headings: <b>${esc(k.headingFont)}</b> · Body: <b>${esc(k.bodyFont)}</b></div></div>
+          <div class="box"><h4>Tagline &amp; voice</h4><div class="tagline" style="font-family:${H}">“${esc(k.tagline)}”</div><div class="voice">${k.voice.map((v) => `<span>${esc(v)}</span>`).join("")}</div><p class="logo-idea"><b>Logo idea:</b> ${esc(k.logoIdea)}</p></div>
+        </div>
+        <div class="two">
+          <div class="box"><h4>Logo concepts</h4><div class="logo-row">${logos(name, primary, accent, bg, text, H)}</div></div>
+          <div class="box"><h4>Export</h4><p style="color:var(--muted);font-size:14px;margin-bottom:14px">Download the brand kit to hand to a designer or developer.</p>
+            <div class="dl-row"><button type="button" data-dl="css">⬇ CSS variables</button><button type="button" data-dl="json">⬇ Brand kit (.json)</button></div></div>
+        </div>
+        <div class="box"><h4>Live website preview</h4><div class="mock" style="background:${bg};color:${text};font-family:${B}">
+          <div class="mock-nav" style="font-family:${H};background:${surface}"><span style="opacity:1;font-size:18px;font-weight:700">${esc(name)}</span><span><i>Shop</i><i>About</i><i>Contact</i></span></div>
+          <div class="mock-hero"><h2 style="font-family:${H}">${esc(k.tagline)}</h2><p>${esc(about)}</p><a style="background:${primary};color:${onColor(primary)}">Get started</a> <a style="border:2px solid ${accent};color:${text};margin-left:6px">Learn more</a></div>
+        </div></div>`;
+      $("#board").onclick = (e) => {
+        const dl = e.target.closest("[data-dl]");
+        if (dl) {
+          const slugName = name.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "brand";
+          const css = `:root {\n${k.palette.map((c) => `  --${(c.role || c.name).toLowerCase().replace(/[^a-z0-9]+/g, "-")}: ${c.hex};`).join("\n")}\n  --font-heading: '${k.headingFont}';\n  --font-body: '${k.bodyFont}';\n}\n`;
+          const out = dl.dataset.dl === "css" ? css : JSON.stringify({ name, ...k }, null, 2);
+          const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(new Blob([out], { type: "text/plain" })), download: `${slugName}-brand.${dl.dataset.dl}` });
+          a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+          return toast("Downloaded ✓");
+        }
+        const sw = e.target.closest(".sw"); if (!sw) return;
+        navigator.clipboard?.writeText(sw.dataset.hex).catch(() => {});
+        toast(`Copied ${sw.dataset.hex}`);
+      };
+    }
+
+    $("#form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const f = e.target.elements;
+      const input = { name: f.name.value.trim(), about: f.about.value.trim(), vibes: [...document.querySelectorAll("#vibes .on")].map((b) => b.textContent) };
+      if (!input.name || !input.about) { $("#err").textContent = "Please add a brand name and what it does."; return; }
+      $("#err").textContent = "";
+      const go = $("#go"); go.disabled = true; go.textContent = "Designing…";
+      let kit;
+      try {
+        const r = await fetch("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tool: "brandkit", input }) });
+        if (!r.ok) throw 0; kit = await r.json(); if (!kit.palette) throw 0;
+      } catch { await new Promise((r) => setTimeout(r, 700)); kit = localKit(input); }
+      show(kit, input.name, input.about);
+      go.disabled = false; go.textContent = "Generate again";
+    });
+    if (location.hash === "#preview") $("#form").requestSubmit();
+  </script>
+</body>
+</html>
