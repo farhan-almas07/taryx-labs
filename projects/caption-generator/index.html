@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CaptionCraft — AI Caption Generator Demo</title>
+  <meta name="description" content="Generate social media captions and hashtags with AI. Demo project by Taryx Labs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg: #f7f6fb; --ink: #17142b; --muted: #6e6a85; --line: #e6e3f0; --v: #6d4aff; --p: #ff5c8a; --card: #fff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+    body::before { content: ""; position: fixed; inset: -20% -10% auto auto; width: 700px; height: 700px; background: radial-gradient(circle, rgba(109, 74, 255, .16), transparent 60%); z-index: -1; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; background: none; }
+    .wrap { width: min(1160px, 100% - 32px); margin: auto; }
+    .demo-bar { background: var(--ink); color: #e5e2f5; font-size: 13px; text-align: center; padding: 9px 16px; }
+    .demo-bar a { color: #f1d9a4; text-decoration: underline; }
+    header { padding: 22px 0; display: flex; align-items: center; gap: 10px; font-family: Sora; font-weight: 700; font-size: 20px; }
+    header i { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, var(--v), var(--p)); display: grid; place-items: center; color: #fff; font-style: normal; font-size: 15px; }
+    .intro { text-align: center; padding: 30px 0 40px; }
+    .intro h1 { font-family: Sora; font-size: clamp(36px, 5.4vw, 64px); line-height: 1.05; letter-spacing: -0.04em; }
+    .intro h1 span { background: linear-gradient(90deg, var(--v), var(--p)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .intro p { color: var(--muted); font-size: 18px; margin-top: 14px; }
+    .app { display: grid; grid-template-columns: 380px 1fr; gap: 24px; padding-bottom: 80px; align-items: start; }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 24px; display: grid; gap: 16px; box-shadow: 0 20px 50px rgba(23, 20, 43, .06); }
+    label, .lbl { display: grid; gap: 7px; font-size: 13px; font-weight: 600; color: var(--muted); }
+    input, select, textarea { border: 1px solid var(--line); border-radius: 12px; padding: 12px 13px; font-size: 15px; background: #fbfaff; outline: none; transition: border-color .2s, box-shadow .2s; color: var(--ink); }
+    textarea { resize: vertical; min-height: 80px; }
+    input:focus, select:focus, textarea:focus { border-color: var(--v); box-shadow: 0 0 0 4px rgba(109, 74, 255, .12); }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chips button { padding: 8px 13px; border-radius: 999px; border: 1px solid var(--line); font-size: 13.5px; font-weight: 500; color: var(--ink); transition: all .2s; }
+    .chips button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .go { background: linear-gradient(90deg, var(--v), var(--p)); color: #fff; padding: 15px; border-radius: 14px; font-weight: 600; font-size: 16px; box-shadow: 0 12px 30px rgba(109, 74, 255, .3); transition: transform .2s, opacity .2s; }
+    .go:hover { transform: translateY(-2px); }
+    .go:disabled { opacity: .6; cursor: wait; transform: none; }
+    .err { color: #d6336c; font-size: 13.5px; min-height: 1em; }
+    .out { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+    .results { display: grid; gap: 14px; }
+    .cap { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; display: grid; gap: 12px; animation: up .5s cubic-bezier(.22,1,.36,1) both; cursor: pointer; transition: border-color .2s; }
+    .cap.sel { border-color: var(--v); box-shadow: 0 0 0 3px rgba(109, 74, 255, .12); }
+    .cap:nth-child(2) { animation-delay: .08s; } .cap:nth-child(3) { animation-delay: .16s; }
+    @keyframes up { from { opacity: 0; transform: translateY(14px); } }
+    .cap-top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .copy { font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); text-transform: none; letter-spacing: 0; color: var(--ink); }
+    .copy.ok { background: var(--v); border-color: var(--v); color: #fff; }
+    .count { font-size: 12px; color: var(--muted); text-transform: none; letter-spacing: 0; font-weight: 500; margin-left: auto; margin-right: 10px; }
+    .count.over { color: #d6336c; }
+    .tools-row { display: flex; gap: 8px; justify-content: flex-end; }
+    .tools-row button { font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; }
+    .tools-row button:hover { border-color: var(--v); color: var(--v); }
+    .tags { background: var(--card); border: 1px dashed var(--line); border-radius: 18px; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .tags span { color: var(--v); font-weight: 600; font-size: 14px; }
+    .tags .copy { margin-left: auto; }
+    .placeholder { border: 2px dashed var(--line); border-radius: 22px; padding: 60px 30px; text-align: center; color: var(--muted); }
+    .placeholder b { display: block; font-family: Sora; font-size: 22px; color: var(--ink); margin-bottom: 6px; }
+    .sk { height: 92px; border-radius: 18px; background: linear-gradient(90deg, #eeecf6 25%, #f8f7fc 50%, #eeecf6 75%); background-size: 200% 100%; animation: sh 1.2s infinite; }
+    @keyframes sh { to { background-position: -200% 0; } }
+    /* phone preview */
+    .phone { background: #111; border-radius: 38px; padding: 10px; box-shadow: 0 30px 60px rgba(23, 20, 43, .25); position: sticky; top: 20px; }
+    .screen { background: #fff; border-radius: 30px; overflow: hidden; font-size: 13px; }
+    .ph-top { display: flex; align-items: center; gap: 8px; padding: 14px 14px 10px; font-weight: 600; }
+    .ph-top i { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--v), var(--p)); }
+    .ph-img { aspect-ratio: 1; background: linear-gradient(135deg, #ffd6e2, #d9ccff 60%, #c3e4ff); display: grid; place-items: center; font-family: Sora; font-weight: 700; font-size: 22px; color: rgba(23, 20, 43, .75); text-align: center; padding: 20px; }
+    .ph-act { padding: 10px 14px 4px; font-size: 18px; letter-spacing: 6px; }
+    .ph-cap { padding: 0 14px 18px; white-space: pre-wrap; line-height: 1.45; }
+    .ph-cap b { margin-right: 4px; }
+    .ph-cap .h { color: #2f5bd3; }
+    footer { border-top: 1px solid var(--line); padding: 26px 0; font-size: 13px; color: var(--muted); text-align: center; }
+    footer a { color: var(--v); font-weight: 600; }
+    @media (max-width: 1000px) { .app { grid-template-columns: 1fr; } .out { grid-template-columns: 1fr; } .phone { position: static; width: min(300px, 100%); margin: auto; } }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">Demo project by Taryx Labs. <a href="../../#projects">← Back to portfolio</a></div>
+  <div class="wrap">
+    <header><i>✦</i>CaptionCraft</header>
+    <section class="intro">
+      <h1>Scroll-stopping captions,<br /><span>written by AI.</span></h1>
+      <p>Describe your post — get 3 ready-to-use captions and hashtags in seconds.</p>
+    </section>
+    <section class="app">
+      <form class="panel" id="form">
+        <label>Your business<input name="business" required maxlength="120" placeholder="e.g. Cozy coffee shop in Vilnius" value="Cozy coffee shop in Vilnius" /></label>
+        <label>What's the post about?<textarea name="topic" required maxlength="200" placeholder="e.g. New pumpkin spice latte, 20% off this weekend">New pumpkin spice latte, 20% off this weekend</textarea></label>
+        <div class="lbl">Tone<div class="chips" data-name="tone"><button type="button" class="on">Friendly</button><button type="button">Professional</button><button type="button">Playful</button><button type="button">Luxury</button></div></div>
+        <div class="lbl">Platform<div class="chips" data-name="platform"><button type="button" class="on">Instagram</button><button type="button">Facebook</button><button type="button">LinkedIn</button><button type="button">TikTok</button></div></div>
+        <button class="go" id="go">Generate captions ✦</button>
+        <p class="err" id="err" role="status"></p>
+      </form>
+      <div class="out">
+        <div class="results" id="results"><div class="placeholder"><b>Your captions appear here</b>Fill in the details and press Generate.</div></div>
+        <div class="phone" aria-label="Post preview"><div class="screen">
+          <div class="ph-top"><i></i><span id="ph-name">yourbrand</span></div>
+          <div class="ph-img" id="ph-img">Your post</div>
+          <div class="ph-act">♡ ◯ ➤</div>
+          <div class="ph-cap" id="ph-cap"><b>yourbrand</b>Your caption preview…</div>
+        </div></div>
+      </div>
+    </section>
+  </div>
+  <footer>CaptionCraft is a demo · Designed &amp; built by <a href="../../">Taryx Labs</a></footer>
+
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    document.querySelectorAll(".chips").forEach((g) => g.addEventListener("click", (e) => {
+      if (e.target.tagName !== "BUTTON") return;
+      g.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b === e.target));
+    }));
+    const pick = (n) => document.querySelector(`.chips[data-name=${n}] .on`).textContent;
+
+    // Offline fallback so the demo always works
+    function localCaptions({ business, topic, tone }) {
+      const em = { Friendly: ["☕", "💛"], Professional: ["📌", "✅"], Playful: ["🎉", "😍"], Luxury: ["✨", "🥂"] }[tone] || ["✨", "💫"];
+      const short = business.replace(/\s+in\s+.*/i, "");
+      const words = (business + " " + topic).toLowerCase().match(/[a-z]{4,}/g) || [];
+      const tags = [...new Set(words)].slice(0, 6).map((w) => "#" + w);
+      return {
+        captions: [
+          `${em[0]} ${topic}! Come see us at our ${short.toLowerCase()} — you deserve a treat today. Tag a friend who needs this ${em[1]}`,
+          `Big news from our ${short.toLowerCase()}: ${topic.charAt(0).toLowerCase() + topic.slice(1)}. Don't miss out — visit us this week! ${em[0]}`,
+          `This is your sign ${em[1]} ${topic}. Save this post and drop by — we can't wait to see you!`,
+        ],
+        hashtags: [...tags, "#shoplocal", "#supportsmallbusiness"].slice(0, 8),
+      };
+    }
+
+    function preview(text, tags) {
+      const biz = $("#form").elements.business.value || "yourbrand";
+      const handle = biz.toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 18) || "yourbrand";
+      $("#ph-name").textContent = handle;
+      $("#ph-img").textContent = $("#form").elements.topic.value.slice(0, 60) || "Your post";
+      $("#ph-cap").innerHTML = `<b>${esc(handle)}</b>${esc(text)}\n<span class="h">${esc(tags.slice(0, 5).join(" "))}</span>`;
+    }
+
+    function copyBtn(btn, text) {
+      navigator.clipboard?.writeText(text).catch(() => {});
+      btn.textContent = "Copied ✓"; btn.classList.add("ok");
+      setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("ok"); }, 1500);
+    }
+
+    function show({ captions, hashtags }) {
+      const r = $("#results");
+      const limit = { Instagram: 2200, Facebook: 63206, LinkedIn: 3000, TikTok: 2200 }[pick("platform")] || 2200;
+      r.innerHTML = captions.map((c, i) => `<div class="cap${i ? "" : " sel"}" data-i="${i}"><div class="cap-top">Option ${i + 1}<span class="count${c.length > limit ? " over" : ""}">${c.length} / ${limit} chars</span><button type="button" class="copy">Copy</button></div><div>${esc(c)}</div></div>`).join("")
+        + `<div class="tags">${hashtags.map((h) => `<span>${esc(h)}</span>`).join("")}<button type="button" class="copy" id="copy-tags">Copy</button></div>`
+        + `<div class="tools-row"><button type="button" id="dl">⬇ Download all (.txt)</button></div>`;
+      $("#dl").onclick = () => {
+        const txt = captions.map((c, i) => `Option ${i + 1}:\n${c}`).join("\n\n") + `\n\nHashtags:\n${hashtags.join(" ")}\n`;
+        const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(new Blob([txt], { type: "text/plain" })), download: "captions.txt" });
+        a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      };
+      r.onclick = (e) => {
+        const card = e.target.closest(".cap");
+        if (e.target.id === "copy-tags") return copyBtn(e.target, hashtags.join(" "));
+        if (!card) return;
+        const text = captions[+card.dataset.i];
+        if (e.target.classList.contains("copy")) copyBtn(e.target, text);
+        r.querySelectorAll(".cap").forEach((c) => c.classList.toggle("sel", c === card));
+        preview(text, hashtags);
+      };
+      preview(captions[0], hashtags);
+    }
+
+    $("#form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const f = e.target.elements;
+      const input = { business: f.business.value.trim(), topic: f.topic.value.trim(), tone: pick("tone"), platform: pick("platform") };
+      if (!input.business || !input.topic) { $("#err").textContent = "Please describe your business and your post."; return; }
+      $("#err").textContent = "";
+      const go = $("#go"); go.disabled = true; go.textContent = "Writing…";
+      $("#results").innerHTML = '<div class="sk"></div><div class="sk"></div><div class="sk"></div>';
+      let out;
+      try {
+        const r = await fetch("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tool: "captions", input }) });
+        if (!r.ok) throw 0; out = await r.json(); if (!out.captions) throw 0;
+      } catch { await new Promise((r) => setTimeout(r, 700)); out = localCaptions(input); }
+      show(out);
+      go.disabled = false; go.textContent = "Generate again ✦";
+    });
+    if (location.hash === "#preview") $("#form").requestSubmit();
+  </script>
+</body>
+</html>
