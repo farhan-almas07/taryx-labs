@@ -4,7 +4,7 @@ const data = await fetch("site-data.json", { cache: "no-cache" }).then((r) => r.
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const esc = (s = "") => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduce = false; // animations always on
 const desktop = () => innerWidth > 900;
 
 /* ================= Fill content from site-data.js ================= */
@@ -15,7 +15,6 @@ $$("[data-company-story]").forEach((el) => (el.textContent = data.companyStory))
 $$("[data-title]").forEach((el) => (el.textContent = data.title));
 $$("[data-photo]").forEach((el) => (el.src = data.photo));
 $$("[data-avatar]").forEach((el) => (el.src = data.avatar || data.photo));
-$("[data-available]").textContent = data.available;
 $("[data-hero-line]").textContent = data.heroLine;
 $$("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 $$("[data-location]").forEach((el) => (el.textContent = data.location));

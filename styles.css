@@ -655,8 +655,3 @@ body.chat-open .chat { transform: none; opacity: 1; pointer-events: auto; }
   .email-box { grid-template-columns: 1fr; }
   .chat, .chat-fab { right: 16px; bottom: 16px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  .reveal, .hero-title .wd, .photo-card, .photo-tag, .nav, .chat-fab, .bigname-wrap { opacity: 1 !important; transform: none !important; filter: none !important; }
-  html { scroll-behavior: auto; }
-}

@@ -1,7 +1,7 @@
 // 3D intro: galaxy of particles → forms the name → bursts into a living sphere behind the photo.
 // Uses Three.js (WebGL). If anything fails, the site simply shows without the intro.
 const done = () => { if (window.__introDone) return; window.__introDone = true; window.dispatchEvent(new Event("intro:done")); };
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduce = false; // animations always on
 
 async function start() {
   const canvas = document.querySelector(".hero-3d");
