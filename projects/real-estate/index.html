@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aurelia Estates — AI Real Estate Demo</title>
+  <meta name="description" content="Demo real estate website with an AI property assistant, built by Md Farhan Almas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg: #f6f3ee; --ink: #1b2a22; --muted: #6b7570; --line: #e3ded4; --green: #1f4d36; --gold: #c08a3e; --card: #fff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+    button, input, select { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; background: none; }
+    .wrap { width: min(1160px, 100% - 32px); margin: auto; }
+    .demo-bar { background: var(--ink); color: #e9efe9; font-size: 13px; text-align: center; padding: 9px 16px; }
+    .demo-bar a { color: #f1d9a4; text-decoration: underline; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; }
+    .brand { font-family: Fraunces, serif; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; display: flex; gap: 10px; align-items: center; }
+    .brand i { width: 30px; height: 30px; border-radius: 8px; background: var(--green); display: grid; place-items: center; color: #f1d9a4; font-style: normal; font-size: 15px; }
+    header nav { display: flex; gap: 26px; font-size: 14px; color: var(--muted); }
+    .hero { padding: 50px 0 30px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: end; }
+    .hero h1 { font-family: Fraunces, serif; font-weight: 500; font-size: clamp(40px, 6vw, 72px); line-height: 1.02; letter-spacing: -0.03em; }
+    .hero h1 em { color: var(--green); }
+    .hero p { color: var(--muted); font-size: 18px; max-width: 440px; }
+    .search { margin: 34px 0 10px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 10px; display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 8px; box-shadow: 0 20px 50px rgba(27, 42, 34, 0.08); }
+    .search label { display: grid; gap: 2px; padding: 8px 14px; border-radius: 12px; font-size: 12px; color: var(--muted); font-weight: 600; }
+    .search label + label { border-left: 1px solid var(--line); border-radius: 0; }
+    .search select { border: 0; background: none; font-size: 15px; font-weight: 500; color: var(--ink); outline: none; padding: 2px 0; }
+    .search .count { align-self: center; background: var(--green); color: #fff; padding: 14px 20px; border-radius: 14px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding: 30px 0 90px; }
+    .home { background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s; }
+    .home:hover { transform: translateY(-4px); box-shadow: 0 24px 50px rgba(27, 42, 34, 0.1); }
+    .pic { aspect-ratio: 4/3; position: relative; }
+    .pic svg { width: 100%; height: 100%; display: block; }
+    .tag { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,.9); padding: 5px 11px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .body h3 { font-family: Fraunces, serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
+    .price { font-weight: 600; color: var(--green); font-size: 18px; }
+    .meta { display: flex; gap: 14px; font-size: 13px; color: var(--muted); }
+    .note { font-size: 14px; color: var(--muted); flex: 1; }
+    .book { margin-top: 8px; padding: 12px; border-radius: 12px; border: 1px solid var(--green); color: var(--green); font-weight: 600; transition: background .2s, color .2s; }
+    .book:hover { background: var(--green); color: #fff; }
+    .empty { grid-column: 1 / -1; text-align: center; padding: 60px; color: var(--muted); }
+    .perks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; margin: 26px 0 6px; }
+    .perks div { background: #fbfaf7; padding: 16px 18px; font-size: 13.5px; color: var(--muted); }
+    .perks b { display: block; font-family: Fraunces, serif; font-size: 19px; color: var(--ink); font-weight: 600; }
+    .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+    .bar h2 { font-family: Fraunces, serif; font-weight: 500; font-size: 28px; letter-spacing: -0.02em; }
+    .bar-r { display: flex; gap: 8px; align-items: center; }
+    .bar select, .tab { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 9px 14px; font-size: 14px; font-weight: 500; }
+    .tab.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .fav { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; font-size: 17px; color: #b8b2a6; transition: transform .2s, color .2s; }
+    .fav:hover { transform: scale(1.1); }
+    .fav.on { color: #d6455d; }
+    .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 10px 0 70px; }
+    .how div { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
+    .how b { font-family: Fraunces, serif; font-size: 34px; color: var(--gold); font-weight: 500; }
+    .how h4 { font-family: Fraunces, serif; font-size: 20px; margin: 6px 0; }
+    .how p { color: var(--muted); font-size: 14.5px; }
+    .cta { background: var(--green); color: #eef3ee; border-radius: 26px; padding: 44px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 70px; }
+    .cta h3 { font-family: Fraunces, serif; font-weight: 500; font-size: clamp(26px, 3vw, 36px); max-width: 520px; line-height: 1.15; }
+    .cta button { background: #f1d9a4; color: var(--ink); padding: 14px 22px; border-radius: 999px; font-weight: 600; }
+    @media (max-width: 860px) { .perks { grid-template-columns: 1fr 1fr; } .how { grid-template-columns: 1fr; } }
+    footer { border-top: 1px solid var(--line); padding: 30px 0; font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    footer a { color: var(--green); font-weight: 600; }
+    /* modal */
+    .modal { position: fixed; inset: 0; background: rgba(20, 30, 25, .45); display: grid; place-items: center; padding: 16px; opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 50; backdrop-filter: blur(4px); }
+    .modal.open { opacity: 1; pointer-events: auto; }
+    .sheet { background: #fff; border-radius: 22px; padding: 28px; width: min(420px, 100%); display: grid; gap: 14px; transform: translateY(20px); transition: transform .4s cubic-bezier(.22,1,.36,1); }
+    .modal.open .sheet { transform: none; }
+    .sheet h3 { font-family: Fraunces, serif; font-size: 24px; }
+    .sheet label { display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+    .sheet input, .sheet select { border: 1px solid var(--line); border-radius: 12px; padding: 12px; font-size: 15px; background: var(--bg); outline: none; }
+    .sheet input:focus { border-color: var(--green); }
+    .row { display: flex; gap: 10px; }
+    .row > * { flex: 1; }
+    .primary { background: var(--green); color: #fff; padding: 13px; border-radius: 12px; font-weight: 600; }
+    .ghost { padding: 13px; border-radius: 12px; border: 1px solid var(--line); font-weight: 600; }
+    .done { text-align: center; display: grid; gap: 10px; }
+    .done b { font-size: 40px; }
+    /* chat */
+    .fab { position: fixed; right: 20px; bottom: 20px; background: var(--green); color: #fff; padding: 14px 20px; border-radius: 999px; font-weight: 600; box-shadow: 0 14px 40px rgba(31, 77, 54, .35); z-index: 40; display: flex; gap: 8px; align-items: center; }
+    .fab::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #9ef0b8; }
+    .chat { position: fixed; right: 20px; bottom: 20px; width: min(380px, calc(100vw - 32px)); height: min(560px, calc(100vh - 100px)); background: #fff; border-radius: 22px; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(20, 30, 25, .2); display: flex; flex-direction: column; z-index: 45; transform: scale(.9) translateY(20px); transform-origin: bottom right; opacity: 0; pointer-events: none; transition: all .4s cubic-bezier(.22,1,.36,1); }
+    .chat.open { transform: none; opacity: 1; pointer-events: auto; }
+    .chat-head { padding: 16px 18px; background: var(--green); color: #fff; border-radius: 22px 22px 0 0; display: flex; justify-content: space-between; align-items: center; }
+    .chat-head small { display: block; opacity: .75; font-size: 12px; }
+    .chat-head button { color: #fff; font-size: 22px; }
+    .msgs { flex: 1; overflow: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .m { max-width: 85%; padding: 10px 13px; border-radius: 16px; font-size: 14.5px; white-space: pre-wrap; }
+    .m.bot { background: var(--bg); align-self: flex-start; border-bottom-left-radius: 4px; }
+    .m.me { background: var(--green); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .sugg { display: flex; gap: 6px; overflow-x: auto; padding: 0 14px 10px; }
+    .sugg button { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; font-size: 13px; }
+    .chat form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+    .chat input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 999px; padding: 10px 14px; outline: none; }
+    .chat form button { background: var(--green); color: #fff; width: 40px; height: 40px; border-radius: 50%; font-weight: 700; }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding-top: 24px; }
+      header nav { display: none; }
+      .search { grid-template-columns: 1fr 1fr; }
+      .search label + label { border-left: 0; }
+      .search .count { grid-column: 1 / -1; text-align: center; }
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">Demo project by Taryx Labs — fictional agency. <a href="../../#projects">← Back to portfolio</a></div>
+  <div class="wrap">
+    <header>
+      <div class="brand"><i>A</i>Aurelia Estates</div>
+      <nav><span>Buy</span><span>Rent</span><span>Sell</span><span>About</span></nav>
+    </header>
+    <section class="hero">
+      <h1>Find a home that <em>fits your life.</em></h1>
+      <p>Browse hand-picked homes in Vilnius — or ask our AI assistant to find the right one for you in seconds.</p>
+    </section>
+    <div class="perks"><div><b>24/7</b>AI property assistant</div><div><b>7 days</b>Viewings every week</div><div><b>Vilnius</b>Hand-picked homes</div><div><b>0 €</b>Fee to book a viewing</div></div>
+    <form class="search" id="filters">
+      <label>Looking to<select name="deal"><option value="">Buy or rent</option><option value="buy">Buy</option><option value="rent">Rent</option></select></label>
+      <label>Type<select name="type"><option value="">Any type</option><option>Apartment</option><option>House</option></select></label>
+      <label>Bedrooms<select name="beds"><option value="0">Any</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select></label>
+      <label>Max price<select name="max"><option value="">No limit</option><option value="800">€800 / mo</option><option value="1200">€1,200 / mo</option><option value="300000">€300,000</option><option value="450000">€450,000</option></select></label>
+      <span class="count" id="count"></span>
+    </form>
+    <div class="bar"><h2 id="bar-title">All homes</h2><div class="bar-r">
+      <button type="button" class="tab" id="saved-tab">♥ Saved <span id="saved-count">0</span></button>
+      <select id="sort" aria-label="Sort"><option value="new">Recommended</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="big">Largest first</option></select>
+    </div></div>
+    <section class="grid" id="grid"></section>
+    <section class="how">
+      <div><b>01</b><h4>Tell us what you need</h4><p>Use the filters or just ask our AI assistant in plain words.</p></div>
+      <div><b>02</b><h4>Get matched instantly</h4><p>The assistant recommends homes from our live listings in seconds.</p></div>
+      <div><b>03</b><h4>Book a viewing</h4><p>Pick a date and time — our agent confirms it the same day.</p></div>
+    </section>
+    <div class="cta"><h3>Not sure where to start? Ask our AI assistant — it knows every home we have.</h3><button type="button" id="cta-ask">Ask the assistant →</button></div>
+    <footer><span>© Aurelia Estates (demo) · Mon–Sat 9:00–18:00</span><span>Designed &amp; built by <a href="../../">Taryx Labs</a></span></footer>
+  </div>
+
+  <div class="modal" id="modal">
+    <form class="sheet" id="book">
+      <h3 id="book-title">Book a viewing</h3>
+      <label>Your name<input name="name" required placeholder="Jane Doe" /></label>
+      <label>Email<input name="email" type="email" required placeholder="jane@email.com" /></label>
+      <div class="row">
+        <label>Date<input name="date" type="date" required /></label>
+        <label>Time<select name="time"><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option></select></label>
+      </div>
+      <div class="row"><button type="button" class="ghost" id="cancel">Cancel</button><button class="primary">Confirm</button></div>
+    </form>
+  </div>
+
+  <button class="fab" id="fab">Ask our AI</button>
+  <div class="chat" id="chat">
+    <div class="chat-head"><div><strong>Aurelia Assistant</strong><small>Usually replies instantly</small></div><button id="close" aria-label="Close">×</button></div>
+    <div class="msgs" id="msgs"></div>
+    <div class="sugg" id="sugg"></div>
+    <form id="ask"><input id="q" placeholder="e.g. 2-bed flat under €1,200" autocomplete="off" maxlength="300" /><button aria-label="Send">↑</button></form>
+  </div>
+
+  <script type="module">
+    import { listings, agency } from "./listings.js";
+    const $ = (s) => document.querySelector(s);
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const money = (l) => (l.deal === "rent" ? `€${l.price.toLocaleString("en-US")} / month` : `€${l.price.toLocaleString("en-US")}`);
+    const pic = (l) => `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="s${l.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${l.hue} 45% 82%)"/><stop offset="1" stop-color="hsl(${l.hue} 35% 94%)"/></linearGradient></defs><rect width="400" height="300" fill="url(#s${l.id})"/><circle cx="320" cy="70" r="28" fill="hsl(${l.hue + 20} 70% 92%)"/><rect y="230" width="400" height="70" fill="hsl(${l.hue} 25% 70%)"/>${l.type === "House"
+      ? `<polygon points="120,140 200,80 280,140" fill="hsl(${l.hue} 30% 35%)"/><rect x="135" y="140" width="130" height="95" fill="#fff"/><rect x="185" y="185" width="30" height="50" fill="hsl(${l.hue} 30% 35%)"/><rect x="150" y="160" width="24" height="22" fill="hsl(${l.hue} 40% 75%)"/><rect x="226" y="160" width="24" height="22" fill="hsl(${l.hue} 40% 75%)"/>`
+      : `<rect x="140" y="60" width="120" height="175" fill="#fff"/>${[0, 1, 2, 3, 4].map((r) => [0, 1, 2].map((c) => `<rect x="${155 + c * 33}" y="${75 + r * 30}" width="22" height="18" fill="hsl(${l.hue} 40% ${r % 2 ? 72 : 80}%)"/>`).join("")).join("")}<rect x="185" y="215" width="30" height="20" fill="hsl(${l.hue} 30% 35%)"/>`}</svg>`;
+
+    // ---- Listings + filters ----
+    const filters = $("#filters");
+    let favs = new Set();
+    try { favs = new Set(JSON.parse(localStorage.getItem("aurelia-favs") || "[]")); } catch {}
+    let savedOnly = false;
+    const saveFavs = () => { try { localStorage.setItem("aurelia-favs", JSON.stringify([...favs])); } catch {} $("#saved-count").textContent = favs.size; };
+    function render() {
+      const f = Object.fromEntries(new FormData(filters));
+      let list = listings.filter((l) => (!f.deal || l.deal === f.deal) && (!f.type || l.type === f.type) && l.beds >= +f.beds && (!f.max || l.price <= +f.max));
+      if (savedOnly) list = list.filter((l) => favs.has(l.id));
+      const sort = $("#sort").value;
+      if (sort === "low") list.sort((a, b) => a.price - b.price);
+      if (sort === "high") list.sort((a, b) => b.price - a.price);
+      if (sort === "big") list.sort((a, b) => b.size - a.size);
+      $("#bar-title").textContent = savedOnly ? "Saved homes" : "All homes";
+      $("#saved-tab").classList.toggle("on", savedOnly);
+      $("#saved-count").textContent = favs.size;
+      $("#count").textContent = `${list.length} ${list.length === 1 ? "home" : "homes"} found`;
+      $("#grid").innerHTML = list.length ? list.map((l) => `<article class="home">
+          <div class="pic">${pic(l)}<button class="fav${favs.has(l.id) ? " on" : ""}" data-fav="${l.id}" aria-label="Save ${esc(l.title)}">${favs.has(l.id) ? "♥" : "♡"}</button><span class="tag">For ${l.deal === "rent" ? "rent" : "sale"} · ${esc(l.area)}</span></div>
+          <div class="body"><h3>${esc(l.title)}</h3><div class="price">${money(l)}</div>
+            <div class="meta"><span>${l.beds} bed</span><span>${l.baths} bath</span><span>${l.size} m²</span></div>
+            <p class="note">${esc(l.note)}</p><button class="book" data-id="${l.id}">Book a viewing</button></div></article>`).join("")
+        : `<p class="empty">${savedOnly ? "No saved homes yet — tap ♡ on any home to save it." : "No homes match — try widening your filters, or ask our AI assistant."}</p>`;
+    }
+    filters.addEventListener("change", render);
+    $("#sort").addEventListener("change", render);
+    $("#saved-tab").addEventListener("click", () => { savedOnly = !savedOnly; render(); });
+    $("#grid").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-fav]"); if (!b) return;
+      const id = +b.dataset.fav; favs.has(id) ? favs.delete(id) : favs.add(id); saveFavs(); render();
+    });
+    render();
+
+    // ---- Booking modal (demo: nothing is sent) ----
+    const modal = $("#modal"), book = $("#book");
+    const blank = book.innerHTML;
+    let current;
+    function openBooking(id) {
+      current = listings.find((l) => l.id === +id);
+      book.innerHTML = blank;
+      $("#book-title").textContent = `Book a viewing — ${current.title}`;
+      book.elements.date.min = new Date().toISOString().slice(0, 10);
+      $("#cancel").onclick = () => modal.classList.remove("open");
+      modal.classList.add("open");
+      setTimeout(() => book.elements.name.focus(), 200);
+    }
+    $("#grid").addEventListener("click", (e) => e.target.dataset.id && openBooking(e.target.dataset.id));
+    $("#cta-ask").onclick = () => $("#fab").click();
+    modal.addEventListener("click", (e) => e.target === modal && modal.classList.remove("open"));
+    book.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!book.checkValidity()) return book.reportValidity();
+      const d = Object.fromEntries(new FormData(book));
+      const when = new Date(d.date).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+      book.innerHTML = `<div class="done"><b>✓</b><h3>Viewing requested</h3><p>${esc(d.name.split(" ")[0])}, your viewing of <strong>${esc(current.title)}</strong> on ${when} at ${esc(d.time)} is requested.</p><p style="font-size:13px;color:var(--muted)">Demo only — no booking was actually sent.</p><button type="button" class="primary" id="ok">Done</button></div>`;
+      $("#ok").onclick = () => modal.classList.remove("open");
+    });
+
+    // ---- AI assistant ----
+    const chat = $("#chat"), msgs = $("#msgs"), q = $("#q");
+    const history = [];
+    const add = (t, who) => { const m = document.createElement("div"); m.className = `m ${who}`; m.textContent = t; msgs.append(m); msgs.scrollTop = msgs.scrollHeight; };
+    $("#fab").onclick = () => { chat.classList.add("open"); if (!msgs.childElementCount) add(`Hi! I'm the Aurelia assistant 👋 Tell me what you're looking for — budget, bedrooms, rent or buy.`, "bot"); q.focus(); };
+    $("#close").onclick = () => chat.classList.remove("open");
+    $("#sugg").innerHTML = ["Cheapest rental?", "Family house to buy", "Anything with a garden?", "Office hours?"].map((s) => `<button type="button">${s}</button>`).join("");
+    $("#sugg").onclick = (e) => e.target.tagName === "BUTTON" && send(e.target.textContent);
+
+    function local(text) {
+      const t = text.toLowerCase();
+      if (/hour|open|phone|call|contact/.test(t)) return `We're open ${agency.hours}. Call us on ${agency.phone}.`;
+      if (/view|visit|book|see/.test(t)) return `Easy! Press "Book a viewing" on any property card and pick a date and time.`;
+      let list = [...listings];
+      if (/rent|month/.test(t)) list = list.filter((l) => l.deal === "rent");
+      if (/buy|sale|purchase/.test(t)) list = list.filter((l) => l.deal === "buy");
+      if (/house|villa|family/.test(t)) list = list.filter((l) => l.type === "House");
+      if (/flat|apartment|studio|loft/.test(t)) list = list.filter((l) => l.type === "Apartment");
+      if (/garden/.test(t)) list = list.filter((l) => /garden/i.test(l.note));
+      const beds = t.match(/(\d)\s*-?\s*(bed|bd|room)/); if (beds) list = list.filter((l) => l.beds >= +beds[1]);
+      const max = t.match(/(?:under|below|max|up to)\s*€?\s*([\d,.]+)\s*(k)?/); if (max) { const n = parseFloat(max[1].replace(/,/g, "")) * (max[2] ? 1000 : 1); list = list.filter((l) => l.price <= n); }
+      if (/cheap|lowest|budget/.test(t)) list.sort((a, b) => a.price - b.price);
+      if (!list.length) return "I couldn't find a match for that. Try a higher budget or fewer bedrooms — or ask me about our rentals or houses for sale.";
+      return `Here's what I found:\n${list.slice(0, 3).map((l) => `• ${l.title} (${l.area}) — ${money(l)}, ${l.beds} bed`).join("\n")}\nWant to book a viewing?`;
+    }
+    let busy = false;
+    async function send(text) {
+      text = text.trim(); if (!text || busy) return; busy = true; q.value = "";
+      add(text, "me"); history.push({ role: "user", text });
+      let reply;
+      try {
+        const r = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ bot: "realestate", messages: history.slice(-10) }) });
+        if (!r.ok) throw 0; reply = (await r.json()).reply; if (!reply) throw 0;
+      } catch { reply = local(text); }
+      add(reply, "bot"); history.push({ role: "model", text: reply }); busy = false;
+    }
+    $("#ask").onsubmit = (e) => { e.preventDefault(); send(q.value); };
+    if (location.hash === "#preview") { $("#fab").click(); setTimeout(() => send("2 bed flat under €1,200"), 300); }
+  </script>
+</body>
+</html>
