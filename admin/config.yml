@@ -1,0 +1,174 @@
+# ============================================================
+#  Taryx Labs admin panel (Decap CMS) — open yoursite.com/admin
+#  Change the two lines marked ← after you put the site online.
+# ============================================================
+backend:
+  name: github
+  repo: farhan-almas07/taryx-labs          # ← your GitHub username / repository name
+  branch: main
+  base_url: https://taryx-labs.vercel.app           # ← your live website address
+  auth_endpoint: api/auth
+  commit_messages:
+    update: "Update {{slug}} from admin panel"
+    uploadMedia: "Upload {{path}} from admin panel"
+
+site_url: https://taryx-labs.vercel.app
+display_url: https://taryx-labs.vercel.app
+logo_url: /assets/logo.svg
+media_folder: assets/uploads
+public_folder: assets/uploads
+locale: en
+
+collections:
+  - name: website
+    label: Website
+    editor: { preview: false }
+    files:
+      - name: content
+        label: Edit website
+        file: site-data.json
+        format: json
+        fields:
+          # ---------------- Projects ----------------
+          - label: "Projects (newest first)"
+            name: projects
+            widget: list
+            summary: "{{fields.title}} — {{fields.status}}"
+            hint: "Each project gets a card in the slider and its own case study page."
+            fields:
+              - { label: "Short id (used in the link, no spaces)", name: slug, widget: string, hint: "e.g. coffee-shop-site" }
+              - { label: Title, name: title, widget: string }
+              - { label: Category, name: category, widget: string, hint: "e.g. AI Web App" }
+              - { label: Status, name: status, widget: select, options: ["Live demo", "Live", "In progress", "Coming soon"] }
+              - { label: Year, name: year, widget: string }
+              - { label: Short description, name: description, widget: text }
+              - { label: Tech used, name: tags, widget: list, field: { label: Tag, name: tag, widget: string } }
+              - { label: "Live demo link", name: demo, widget: string, required: false, hint: "Full link (https://...) or a page on this site" }
+              - { label: "GitHub link", name: code, widget: string, required: false }
+              - { label: Screenshot, name: image, widget: image, required: false, choose_url: true }
+              - { label: Card glow color, name: accent, widget: color, required: false }
+              - label: Case study
+                name: case
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: Your role, name: role, widget: string }
+                  - { label: Timeline, name: timeline, widget: string }
+                  - { label: The challenge, name: challenge, widget: text }
+                  - { label: Our solution, name: solution, widget: text }
+                  - { label: Key features, name: features, widget: list, field: { label: Feature, name: feature, widget: string } }
+                  - { label: Outcome, name: results, widget: list, field: { label: Result, name: result, widget: string } }
+
+          # ---------------- Hero ----------------
+          - label: "Hero headline lines"
+            name: headline
+            widget: list
+            hint: 'Each item is one line. Put stars around a word to make it gold, like \*intelligent\*'
+            summary: "{{fields.line}}"
+            field: { label: Line, name: line, widget: string }
+          - { label: "Hero subtitle", name: heroLine, widget: text }
+          - { label: "Availability badge", name: available, widget: string }
+          - label: "Scroll statement"
+            name: statement
+            widget: text
+          - label: "Gold words in the statement"
+            name: highlight
+            widget: list
+            hint: "Exact words from the statement, including punctuation (e.g. think,)"
+            summary: "{{fields.word}}"
+            field: { label: Word, name: word, widget: string }
+
+          # ---------------- Services ----------------
+          - label: "What we do"
+            name: offerings
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Icon, name: icon, widget: select, options: ["web", "chat", "design"] }
+          - label: "Work process steps"
+            name: process
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+          - { label: "Show pricing section", name: showServices, widget: boolean, default: false }
+          - label: "Pricing packages"
+            name: services
+            widget: list
+            summary: "{{fields.name}} — {{fields.price}}"
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Price, name: price, widget: string }
+              - { label: Description, name: description, widget: text }
+              - { label: "Order link (e.g. Fiverr)", name: link, widget: string, required: false }
+
+          # ---------------- Founder ----------------
+          - { label: "Your name", name: name, widget: string }
+          - { label: "First name", name: shortName, widget: string }
+          - { label: "Your role", name: role, widget: string }
+          - { label: "Professional title", name: title, widget: string }
+          - { label: "Founder photo (big)", name: photo, widget: image, choose_url: true }
+          - { label: "Small round photo", name: avatar, widget: image, choose_url: true, hint: "Square photo with your face in the center" }
+          - label: "About me paragraphs"
+            name: story
+            widget: list
+            field: { label: Paragraph, name: paragraph, widget: text }
+          - label: "Quick facts"
+            name: facts
+            widget: list
+            summary: "{{fields.label}}: {{fields.value}}"
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: Value, name: value, widget: string }
+          - label: "Journey timeline"
+            name: journey
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Small label, name: tag, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+
+          # ---------------- Skills ----------------
+          - label: "Skill groups"
+            name: skills
+            widget: list
+            summary: "{{fields.group}}"
+            fields:
+              - { label: Group name, name: group, widget: string }
+              - { label: Note, name: note, widget: string }
+              - { label: Skills, name: items, widget: list, field: { label: Skill, name: item, widget: string } }
+          - label: "Tech tiles (Live stack)"
+            name: tools
+            widget: list
+            summary: "{{fields.tool}}"
+            field: { label: Tool, name: tool, widget: string }
+
+          # ---------------- Company & contact ----------------
+          - { label: "Company name", name: company, widget: string }
+          - { label: "Company short name", name: companyShort, widget: string }
+          - { label: "Tagline", name: tagline, widget: string }
+          - { label: "Name story (used by the AI assistant)", name: companyStory, widget: text, required: false }
+          - { label: "Location", name: location, widget: string }
+          - { label: "Time zone", name: timeZone, widget: string, hint: "e.g. Europe/Vilnius" }
+          - { label: "Email", name: email, widget: string }
+          - { label: "Contact form key (web3forms.com)", name: contactFormKey, widget: string, required: false, hint: "Paste your free Web3Forms key so messages arrive in your inbox" }
+          - label: Social links
+            name: links
+            widget: object
+            fields:
+              - { label: GitHub, name: github, widget: string, required: false }
+              - { label: LinkedIn, name: linkedin, widget: string, required: false }
+              - { label: Fiverr, name: fiverr, widget: string, required: false }
+
+          # ---------------- AI assistant ----------------
+          - label: AI assistant
+            name: chatbot
+            widget: object
+            fields:
+              - { label: Greeting, name: greeting, widget: text }
+              - { label: Suggested questions, name: suggestions, widget: list, field: { label: Question, name: q, widget: string } }
+              - { label: "Extra info the AI should know", name: extraInfo, widget: text, required: false }
